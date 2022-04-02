@@ -129,4 +129,4 @@ keyExtractor?: ((item: T | any, index: number) => string) | undefined;
 
 
 ## LICENSE
-[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Fhyochan%2Freanimated-masonry-list.svg?type=large)](https://app.fossa.com/projects/git%2Bgithub.com%2Fhyochan%2Freanimated-masonry-list?ref=badge_large)
+MIT
