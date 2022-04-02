@@ -18,7 +18,7 @@
 ## Installation
 
 ```
-yarn add reanimated-masonry-list
+yarn add reanimated-masonry-list react-native-gesture-handler react-native-reanimated
 ```
 
 ```tsx
