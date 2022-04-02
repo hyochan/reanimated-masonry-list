@@ -2,6 +2,7 @@
 
 exports[`Rendering should render without crashing 1`] = `
 <RCTScrollView
+  collapsable={false}
   data={
     Array [
       1,
@@ -27,13 +28,10 @@ exports[`Rendering should render without crashing 1`] = `
   renderItem={[Function]}
   scrollEventThrottle={16}
   style={
-    Array [
-      Object {
-        "alignSelf": "stretch",
-        "flex": 1,
-      },
-      undefined,
-    ]
+    Object {
+      "alignSelf": "stretch",
+      "flex": 1,
+    }
   }
 >
   <RCTRefreshControl />

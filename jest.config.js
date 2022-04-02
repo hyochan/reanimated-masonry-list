@@ -22,7 +22,7 @@ module.exports = {
     '\\.svg': '<rootDir>/__mocks__/svgMock.js',
     '.+\\.(css|styl|less|sass|scss|png|jpg|ttf|woff|woff2)$': 'ts-jest',
   },
-  setupFiles: [...expoPreset.setupFiles],
+  setupFiles: [...expoPreset.setupFiles, '<rootDir>/tests/setup.ts'],
   testPathIgnorePatterns: ['\\.snap$', '<rootDir>/node_modules/'],
   /* eslint-disable */
   transformIgnorePatterns: [
