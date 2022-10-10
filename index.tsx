@@ -66,6 +66,7 @@ function MasonryList<T>(props: Props<T>): ReactElement {
     numColumns = 2,
     horizontal,
     onScroll,
+    keyboardShouldPersistTaps = 'handled',
     removeClippedSubviews = false,
     keyExtractor,
   } = props;
@@ -76,6 +77,7 @@ function MasonryList<T>(props: Props<T>): ReactElement {
     <Animated.ScrollView
       {...propsWithoutStyle}
       ref={innerRef}
+      keyboardShouldPersistTaps={keyboardShouldPersistTaps}
       style={[{flex: 1, alignSelf: 'stretch'}, containerStyle]}
       contentContainerStyle={contentContainerStyle}
       removeClippedSubviews={removeClippedSubviews}
