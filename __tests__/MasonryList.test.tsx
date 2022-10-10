@@ -1,7 +1,9 @@
-import React, {ReactElement} from 'react';
-import {RenderAPI, fireEvent, render} from '@testing-library/react-native';
 import {Text, View} from 'react-native';
+import {fireEvent, render} from '@testing-library/react-native';
 
+import React from 'react';
+import type {ReactElement} from 'react';
+import type {RenderAPI} from '@testing-library/react-native';
 import Template from '../';
 import {act} from 'react-test-renderer';
 
@@ -24,7 +26,7 @@ describe('Rendering', () => {
     expect(baseElement).toBeTruthy();
   });
 
-  it('should render loading view', async () => {
+  it('should render loading view', () => {
     component = (
       <Template
         data={data}
@@ -36,13 +38,13 @@ describe('Rendering', () => {
 
     testingLib = render(component);
 
-    const loading = await testingLib.findByText(/loading/i);
+    const loading = testingLib.getByText(/loading/i);
 
     expect(loading).toBeTruthy();
   });
 
   describe('Empty View', () => {
-    it('should render empty view', async () => {
+    it('should render empty view', () => {
       component = (
         <Template
           data={[]}
@@ -54,12 +56,12 @@ describe('Rendering', () => {
 
       testingLib = render(component);
 
-      const empty = await testingLib.findByText(/empty/i);
+      const empty = testingLib.getByText(/empty/i);
 
       expect(empty).toBeTruthy();
     });
 
-    it('should render functional empty view', async () => {
+    it('should render functional empty view', () => {
       component = (
         <Template
           data={[]}
@@ -71,14 +73,14 @@ describe('Rendering', () => {
 
       testingLib = render(component);
 
-      const empty = await testingLib.findByText(/functional empty/i);
+      const empty = testingLib.getByText(/functional empty/i);
 
       expect(empty).toBeTruthy();
     });
   });
 
   describe('Refresh', () => {
-    it('should handle `refreshing`', async () => {
+    it('should handle `refreshing`', () => {
       component = (
         <Template
           data={[]}
@@ -91,7 +93,7 @@ describe('Rendering', () => {
       expect(testingLib).toBeTruthy();
     });
 
-    it('should trigger `onRefresh`', async () => {
+    it('should trigger `onRefresh`', () => {
       component = (
         <Template
           testID="masonry-list"
@@ -117,7 +119,29 @@ describe('Rendering', () => {
       expect(masonryList.props.onRefresh).toBeDefined();
     });
 
-    it('should trigger `onRefresh` even when `onRefresh` is not provided', async () => {
+    it('should set `refreshControl` to falsy', () => {
+      component = (
+        <Template
+          testID="masonry-list"
+          data={[]}
+          horizontal
+          refreshControl={false}
+          numColumns={3}
+          keyExtractor={(item, index) => index.toString()}
+          renderItem={({i}) => <View key={i} />}
+        />
+      );
+
+      testingLib = render(component);
+
+      const masonryList = testingLib.getByTestId('masonry-list');
+
+      expect(masonryList).toBeTruthy();
+
+      expect(masonryList.props.refreshControl).toBeFalsy();
+    });
+
+    it('should trigger `onRefresh` even when `onRefresh` is not provided', () => {
       component = (
         <Template
           testID="masonry-list"

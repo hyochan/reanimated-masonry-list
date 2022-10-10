@@ -16,6 +16,7 @@ interface Props<T> extends Omit<ScrollViewProps, 'refreshControl'> {
   loading?: boolean;
   refreshing?: RefreshControlProps['refreshing'];
   onRefresh?: RefreshControlProps['onRefresh'];
+  refreshControl?: boolean;
   onEndReached?: () => void;
   onEndReachedThreshold?: number;
   style?: StyleProp<ViewStyle>;
@@ -30,6 +31,7 @@ interface Props<T> extends Omit<ScrollViewProps, 'refreshControl'> {
   containerStyle?: StyleProp<ViewStyle>;
   numColumns?: number;
   keyExtractor?: ((item: T | any, index: number) => string) | undefined;
+  refreshControlProps?: Omit<RefreshControlProps, 'onRefresh' | 'refreshing'>;
 }
 
 const isCloseToBottom = (
@@ -66,9 +68,11 @@ function MasonryList<T>(props: Props<T>): ReactElement {
     numColumns = 2,
     horizontal,
     onScroll,
-    keyboardShouldPersistTaps = 'handled',
     removeClippedSubviews = false,
     keyExtractor,
+    keyboardShouldPersistTaps = 'handled',
+    refreshControl = true,
+    refreshControlProps,
   } = props;
 
   const {style, ...propsWithoutStyle} = props;
@@ -82,14 +86,17 @@ function MasonryList<T>(props: Props<T>): ReactElement {
       contentContainerStyle={contentContainerStyle}
       removeClippedSubviews={removeClippedSubviews}
       refreshControl={
-        <RefreshControl
-          refreshing={!!(refreshing || isRefreshing)}
-          onRefresh={() => {
-            setIsRefreshing(true);
-            onRefresh?.();
-            setIsRefreshing(false);
-          }}
-        />
+        refreshControl ? (
+          <RefreshControl
+            refreshing={!!(refreshing || isRefreshing)}
+            onRefresh={() => {
+              setIsRefreshing(true);
+              onRefresh?.();
+              setIsRefreshing(false);
+            }}
+            {...refreshControlProps}
+          />
+        ) : null
       }
       scrollEventThrottle={16}
       onScroll={(e) => {
@@ -131,7 +138,11 @@ function MasonryList<T>(props: Props<T>): ReactElement {
                   .map((el, i) => {
                     if (i % numColumns === num) {
                       return (
-                        <View key={keyExtractor?.(el, i)}>
+                        <View
+                          key={
+                            keyExtractor?.(el, i) || `masonry-row-${num}-${i}`
+                          }
+                        >
                           {renderItem({item: el, i})}
                         </View>
                       );
