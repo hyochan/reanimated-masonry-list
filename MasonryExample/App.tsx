@@ -7,7 +7,8 @@ import {
   useColorScheme,
 } from 'react-native';
 // eslint-disable-next-line @typescript-eslint/no-use-before-define
-import React, {FC, ReactElement, useMemo} from 'react';
+import type {FC, ReactElement} from 'react';
+import React, {useMemo} from 'react';
 
 import {Colors} from 'react-native/Libraries/NewAppScreen';
 import MasonryList from 'reanimated-masonry-list';
